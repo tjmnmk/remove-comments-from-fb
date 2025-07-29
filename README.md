@@ -12,10 +12,19 @@ Hit f12 to open the developers console, and then hit Console.
 Drop this piece of code into the console:  
 
 ```javascript
+// before running this script, do one bulk deletion of comments manually
+// at the first time, facebook will ask you to confirm the deletion by typping your password
+// after that, you can run this script to delete all comments in the activity log
+
 function get_rid_of_em() {
+    REMOVE_KEYWORD = "Trash" // Change this according to your language settings (text of  the button for mass delete)
+    //REMOVE_KEYWORD = "Odebrat"
+    REMOVE_KEYWORD_CONFIRMATION = REMOVE_KEYWORD // Text of the confirmation button
+    COMMENT_SELECTOR = '[name="comet_activity_log_item_checkbox"]' // Or insert the selector you find in your inspector!
+
     window.scrollBy(0, 10000) 
 
-    const elements = document.querySelectorAll('[aria-label="Action options"]') // Or insert the classname you find in your inspector!
+    elements = document.querySelectorAll(COMMENT_SELECTOR) 
     for (const idx in elements) {
         try {
             elements[idx].click()
@@ -23,13 +32,21 @@ function get_rid_of_em() {
             console.log(e)
         }
     }
+    
+    const spans = document.querySelectorAll('span');
+    for (const span of spans) {
+        const text = span.textContent.trim();
+        if (REMOVE_KEYWORD === text) {
+            span.click();
+            break;
+        }
+    }
 
-    const deletes = document.querySelectorAll('[role="menuitem"]') // Or insert the classname you find in your inspector!
-    for (const idx in deletes) {
-        try {
-            deletes[idx].click()
-        } catch(e) {
-            console.log(e)
+    const confirmSpans = document.querySelectorAll('span');
+    for (const span of confirmSpans) {
+        const text = span.textContent.trim();
+        if (REMOVE_KEYWORD_CONFIRMATION === text) {
+            span.click();
         }
     }
 }
