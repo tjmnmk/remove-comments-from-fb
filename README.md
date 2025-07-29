@@ -51,7 +51,7 @@ function get_rid_of_em() {
     }
 }
 
-setInterval(get_rid_of_em, 0.1)
+setInterval(get_rid_of_em, 1) // faster interval is not working, so use 1 second
 ```
 Note that the class names may change may change.  
 To fix this, replace those classnames by right clicking on the element on the screen that you want to click,  
